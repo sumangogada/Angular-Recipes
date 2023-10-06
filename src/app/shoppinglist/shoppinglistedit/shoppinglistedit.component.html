@@ -1,0 +1,27 @@
+<div class="row">
+    <div class=" col-xs-12">
+        <form (ngSubmit)="onFormSubmit()" #f="ngForm">
+            <div class="row">
+                <div class="col-sm-5 form-group" ngModelGroup="shoppingListData">
+                    <label for="name">Name</label>
+                    <input type="text" name="nameInput" class="form-control" required ngModel #nameInput="ngModel">
+                    <span *ngIf="!nameInput.valid && nameInput.touched">Name is Required!</span>
+                </div>
+
+                <div class="col-sm-2 form-group" ngModelGroup="shoppingListData">
+                    <label for="amount">Amount</label>
+                    <input type="text" name="amount" class="form-control" required ngModel #amountInput="ngModel">
+                    <span *ngIf="!amountInput.valid && amountInput.touched">Amount is Required!</span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-success" type="submit" [disabled]="!f.valid"
+                            (click)="onAddItem()">Add</button>
+                        <button class="btn btn-danger" type="button" (click)="onDelete()">Delete</button>
+                        <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

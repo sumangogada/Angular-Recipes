@@ -34,7 +34,9 @@ export class ShoppingListComponent implements OnInit {
 
     }
 
-
+    onEditItem(itemId: number) {
+        this.shoppinglistService.onItemChangd.next(itemId);
+    }
 
 
 }

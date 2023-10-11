@@ -7,7 +7,7 @@ import { Ingredient } from "../shared/ingredient.model";
 @Injectable()
 export class RecipesService {
 
-
+    onRecipesChanged = new Subject<Recipe[]>();
 
     private recipes: Recipe[] = [
         new Recipe('Paneer Tikka',
@@ -17,8 +17,7 @@ export class RecipesService {
                 new Ingredient('Paneer', 1),
                 new Ingredient('Onions', 2),
                 new Ingredient('Tomato', 3)
-            ],
-            0),
+            ]),
         new Recipe('Lentils Dal',
             'What else you need ?',
             'https://www.indianveggiedelight.com/wp-content/uploads/2022/02/instant-pot-masoor-dal-new.jpg'
@@ -26,8 +25,7 @@ export class RecipesService {
                 new Ingredient('Lentils', 1),
                 new Ingredient('Tomatoes', 2),
                 new Ingredient('Onions', 1)
-            ],
-            1)
+            ])
 
     ];
 
@@ -37,5 +35,10 @@ export class RecipesService {
 
     getRecipeItem(id: number) {
         return this.recipes[id];
+    }
+
+    updateRecipeItem(index: number, recipe: Recipe) {
+        this.recipes[index] = recipe;
+        this.onRecipesChanged.next(this.recipes.slice());
     }
 }

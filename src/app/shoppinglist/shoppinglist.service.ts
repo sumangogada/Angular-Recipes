@@ -5,9 +5,9 @@ import { Subject } from "rxjs";
 @Injectable()
 export class ShoppingListService {
 
-    onIngredientsChanged = new EventEmitter<Ingredient[]>();
+    onIngredientsChanged = new Subject<Ingredient[]>();
     onItemChangd = new Subject<number>();
-
+    ingredient: Ingredient;
     private ingredients: Ingredient[] = [
         new Ingredient('Apples', 5),
         new Ingredient('Tomatoes', 5)
@@ -22,9 +22,21 @@ export class ShoppingListService {
     getIngredient(index: number) {
         return this.ingredients[index];
     }
+
+    onUpdateIngredient(index: number, newIngredient: Ingredient) {
+        this.ingredients[index] = newIngredient;
+        this.onIngredientsChanged.next(this.ingredients.slice());
+    }
+    onDeleteItem(index: number) {
+        this.ingredient = this.ingredients[index];
+        if (this.ingredient != null) {
+            this.ingredients.splice(index, 1);
+            this.onIngredientsChanged.next(this.ingredients.slice());
+        }
+    }
     onNewItemAdd(newItemVal: Ingredient) {
         this.ingredients.push(newItemVal);
-        this.onIngredientsChanged.emit(this.ingredients);
+        this.onIngredientsChanged.next(this.ingredients.slice());
 
     }
 }

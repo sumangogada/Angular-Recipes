@@ -1,2 +1,63 @@
-<h3 *ngIf="!editMode">In New Recipe!</h3>
-<h3 *ngIf="editMode">In Recipe Edit Mode</h3>
+<!-- <h3 *ngIf="!editMode">In New Recipe!</h3>
+<h3 *ngIf="editMode">In Recipe Edit Mode</h3> -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <form (ngSubmit)="onSubmit()" #f="ngForm">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-success" type="submit">Save</button>
+                    <button class="btn btn-danger" type="button" (click)="onClear()">Cancel</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="nameInput" ngModel>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="imagePath">Image URL</label>
+                        <input type="text" class="form-control" name="imagePath" ngModel>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-xs-12">
+                    <img src="" alt="img-responsive">
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea type="text" class="form-control" name="description" ngModel rows="6"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" name="ingredientName" ngModel rows="6">
+                        </div>
+                        <div class="col-xs-2">
+                            <input type="number" class="form-control" name="ingredientAmount" ngModel rows="6">
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-danger" (click)="onSmallClear()">X</button>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

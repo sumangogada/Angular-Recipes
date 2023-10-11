@@ -11,7 +11,7 @@ import { RecipeDetailComponent } from './recipes/recipedetail/recipedetail.compo
 import { RecipeItemComponent } from './recipes/recipelist/recipeitem/recipeitem.component';
 import { RecipeListComponent } from './recipes/recipelist/recipelist.component';
 import { HeaderComponent } from './header/header.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShoppingListService } from './shoppinglist/shoppinglist.service';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
@@ -36,6 +36,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     AppRoutingModule
   ],

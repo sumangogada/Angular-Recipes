@@ -3,7 +3,6 @@ import { Ingredient } from "src/app/shared/ingredient.model";
 import { ShoppingListService } from "../shoppinglist.service";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { Params } from "@angular/router";
 
 
 @Component({
@@ -17,40 +16,53 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
     @ViewChild('nameInput') nameInputRef: ElementRef;
     @ViewChild('amountInput') amountInputRef: ElementRef;
 
-    @ViewChild('f') singupForm: NgForm;
+    @ViewChild('f', { static: false }) singupForm: NgForm;
     subscription: Subscription;
     editIngredient: Ingredient;
 
     constructor(private shoppingListService: ShoppingListService) { };
-    editedItem: number;
+    editedItemIndex: number;
     editMode = false;
     ngOnInit(): void {
         this.subscription = this.shoppingListService.onItemChangd.subscribe((index: number) => {
-            this.editedItem = index;
+            this.editedItemIndex = index;
             this.editMode = true;
             this.editIngredient = this.shoppingListService.getIngredient(index);
             this.singupForm.setValue({
-                name: this.editIngredient.name,
+                nameInput: this.editIngredient.name,
                 amount: this.editIngredient.amount
             })
         });
     }
     onAddItem() {
         console.log(this.singupForm.form);
-        const ingName = this.singupForm.value.shoppingListData.nameInput;
-        const ingAmt = this.singupForm.value.shoppingListData.amount;
+
+        const ingName = this.singupForm.value.nameInput;
+        const ingAmt = this.singupForm.value.amount;
 
         const newItemAdded = new Ingredient(ingName, ingAmt);
-        this.shoppingListService.onNewItemAdd(newItemAdded);
+
+        if (this.editMode) {
+            this.shoppingListService.onUpdateIngredient(this.editedItemIndex, newItemAdded);
+
+        } else {
+            this.shoppingListService.onNewItemAdd(newItemAdded);
+
+        }
+        this.editMode = false;
+        this.singupForm.reset();
     }
 
     onClear() {
-        this.singupForm.form.patchValue({
-            shoppingListData: {
-                nameInput: '',
-                amount: ''
-            }
-        })
+
+        this.singupForm.reset();
+        this.editMode = false;
+    }
+
+    onDelete() {
+        this.shoppingListService.onDeleteItem(this.editedItemIndex);
+        this.singupForm.reset();
+        this.editMode = false;
     }
 
     ngOnDestroy(): void {
